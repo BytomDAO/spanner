@@ -17,6 +17,7 @@ def post(endpoint, parameter):
     else:
         result = json.loads(request.text)
         if not result['status'] == 'success':
-            print('Server error:Bytomd can not provide' + endpoint + 'service.')
+            print('Server error:' + endpoint + '\n' + result['msg'])
+            sys.exit(1)
         else:
             return result['data']

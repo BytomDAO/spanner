@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import sys
 import getopt
@@ -10,7 +8,7 @@ def validate_address(line, address):
     parameter = {'address': address}
     data = httprequest.post('validate-address', parameter)
     if not data['valid']:
-        print(line + 'This line transaction address is not validate')
+        print(line + 'This line transaction address is not valid')
         sys.exit(1)
 
 
@@ -22,41 +20,38 @@ def validate_amount(line, amount):
         sys.exit(1)
 
 
-def validate_input(argv):
-    global input_path
-    global account_id
+def get_input(argv):
+    global _input_path, _account_id, _password
     try:
-        opts, args = getopt.getopt(argv[1:], 'a:i:', ['account=', 'input='])
-        if len(opts) < 2:
+        opts, args = getopt.getopt(argv[1:], 'i:a:p:', ['input=', 'account=', 'password='])
+        if len(opts) < 3:
             raise getopt.GetoptError('lose command option parameter')
     except getopt.GetoptError as err:
         print('Input error:' + str(err) +
               '\n' + 'Example usage:' +
-              '\n' + '\t./btmtransfer.py -i input.txt -a 0BF63M2U00A04')
+              '\n' + '\t./main.py -i input.txt -a 0ETRPAV900A02 -p 123456')
         sys.exit(1)
     for opt, arg in opts:
         if opt in ('-a', '--account'):
-            account_id = arg
+            _account_id = arg
         if opt in ('-i', '--input'):
-            input_path = arg
+            _input_path = arg
+        if opt in ('-p', '--password'):
+            _password = arg
+    return _input_path, _account_id, _password
+
+
+def validate_input(argv):
+    input_path, account_id, password = get_input(argv)
     # relative path
-    path = os.path.abspath('.') + '/' + input_path
-    if not os.path.exists(path):
+    file_path = os.path.abspath('.') + os.path.sep + input_path
+    if not os.path.exists(file_path):
         # absolute path
-        path = input_path
+        file_path = input_path
     # read file
-    with open(path, 'r', encoding='utf-8') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             splits = line.strip().split(',')
             validate_address(line, splits[0])
             validate_amount(line, splits[1])
-
-
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-    validate_input(argv)
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+    return file_path, account_id, password
