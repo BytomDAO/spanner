@@ -5,11 +5,9 @@ import btmvalidation
 import btmtransaction
 
 
-def main(argv=None):
-    if argv is None:
-        argv = sys.argv
-    path, account_id, password = btmvalidation.validate_input(argv)
-    btmtransaction.handle_input(path, account_id, password)
+def main():
+    path, account_id, password, output_count = btmvalidation.validate_input()
+    btmtransaction.handle_input(path, account_id, password, output_count)
 
 
 if __name__ == "__main__":

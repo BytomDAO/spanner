@@ -1,6 +1,6 @@
 import os
 import sys
-import getopt
+import argparse
 import httprequest
 
 
@@ -20,29 +20,18 @@ def validate_amount(line, amount):
         sys.exit(1)
 
 
-def get_input(argv):
-    global _input_path, _account_id, _password
-    try:
-        opts, args = getopt.getopt(argv[1:], 'i:a:p:', ['input=', 'account=', 'password='])
-        if len(opts) < 3:
-            raise getopt.GetoptError('lose command option parameter')
-    except getopt.GetoptError as err:
-        print('Input error:' + str(err) +
-              '\n' + 'Example usage:' +
-              '\n' + '\t./main.py -i input.txt -a 0ETRPAV900A02 -p 123456')
-        sys.exit(1)
-    for opt, arg in opts:
-        if opt in ('-a', '--account'):
-            _account_id = arg
-        if opt in ('-i', '--input'):
-            _input_path = arg
-        if opt in ('-p', '--password'):
-            _password = arg
-    return _input_path, _account_id, _password
+def get_input():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i', required=True, help='transaction input file')
+    parser.add_argument('-a', required=True, help='wallet account id')
+    parser.add_argument('-p', required=True, help='wallet account password')
+    parser.add_argument('-c', type=int, default=0, help='transaction max output count')
+    args = parser.parse_args()
+    return args.i, args.a, args.p, args.c
 
 
-def validate_input(argv):
-    input_path, account_id, password = get_input(argv)
+def validate_input():
+    input_path, account_id, password, output_count = get_input()
     # relative path
     file_path = os.path.abspath('.') + os.path.sep + input_path
     if not os.path.exists(file_path):
@@ -55,4 +44,4 @@ def validate_input(argv):
             validate_address(line, splits[0])
             validate_amount(line, splits[1])
         print('Transactions address and amount are valid')
-    return file_path, account_id, password
+    return file_path, account_id, password, output_count

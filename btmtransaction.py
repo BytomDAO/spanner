@@ -3,15 +3,17 @@ import sys
 import httprequest
 
 miner_fee = 40000000
-max_output = 1500
+max_output_count = 1500
 
 
-def handle_input(_path, _account_id, _password):
+def handle_input(_path, _account_id, _password, _output_count):
+    if _output_count <= 0:
+        _output_count = max_output_count
     lines = list()
     with open(_path, 'r', encoding='utf-8') as file:
         for line in file:
             line = line.strip()
-            if len(lines) < max_output:
+            if len(lines) < _output_count:
                 lines.append(line)
             else:
                 handle_transaction(lines, _path, _account_id, _password)
