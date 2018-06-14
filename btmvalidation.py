@@ -37,11 +37,16 @@ def validate_input():
     if not os.path.exists(file_path):
         # absolute path
         file_path = input_path
+    total_amount = 0
     # read file
     with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             splits = line.strip().split(',')
             validate_address(line, splits[0])
             validate_amount(line, splits[1])
-        print('Transactions address and amount are valid')
+            total_amount += int(splits[1])
+    print('Transactions address and amount are valid.' +
+          '\nTotal amount is %.2f BTM(without gas).Send BTM or not?(y/n)' % (total_amount / pow(10, 8)))
+    if input() != 'y':
+        sys.exit(0)
     return file_path, account_id, password, output_count
