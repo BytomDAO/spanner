@@ -54,4 +54,5 @@ def validate_input(argv):
             splits = line.strip().split(',')
             validate_address(line, splits[0])
             validate_amount(line, splits[1])
+        print('Transactions address and amount are valid')
     return file_path, account_id, password

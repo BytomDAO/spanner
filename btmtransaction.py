@@ -3,7 +3,7 @@ import sys
 import httprequest
 
 miner_fee = 40000000
-max_output = 100
+max_output = 1500
 
 
 def handle_input(_path, _account_id, _password):
@@ -19,7 +19,7 @@ def handle_input(_path, _account_id, _password):
                 lines.append(line)
     if len(lines) > 0:
         handle_transaction(lines, _path, _account_id, _password)
-    print('Transaction is accomplished.Please check accomplished.txt')
+    print('Transactions are completed.Please check completed.txt')
 
 
 def handle_transaction(lines, _path, _account_id, _password):
@@ -30,7 +30,6 @@ def handle_transaction(lines, _path, _account_id, _password):
         txid = data['tx_id']
         if txid:
             print('transaction_id:\n' + txid)
-            lines = append_txid_to_lines(lines, txid)
             write_lines_to_file(lines, _path)
     else:
         print('Sign transaction is failed.Please check account password.')
@@ -66,18 +65,11 @@ def submit_transaction(_transaction):
     return httprequest.post('submit-transaction', parameter)
 
 
-def append_txid_to_lines(lines, txid):
-    for i in range(len(lines)):
-        # lines[i] = lines[i] + ',' + txid + '\n'
-        lines[i] = lines[i] + ',' + '\n'
-    return lines
-
-
 # write complete transactions lines to file
 def write_lines_to_file(lines, _path):
-    _path = os.path.abspath(os.path.dirname(_path)) + os.path.sep + 'accomplished.txt'
+    _path = os.path.abspath(os.path.dirname(_path)) + os.path.sep + 'completed.txt'
     with open(_path, 'a', encoding='utf-8') as file:
-        file.writelines(lines)
+        file.write('\n'.join(lines) + '\n\n')
 
 
 # control_address action
