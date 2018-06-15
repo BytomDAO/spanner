@@ -88,9 +88,3 @@ def get_spend_dict(_account_id, _amount_sum):
             'amount': _amount_sum,
             'asset_id': 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
             'type': 'spend_account'}
-
-# if __name__ == "__main__":
-#     path = '/Users/john/Desktop/btm.txt'
-#     account_id = '0F0BV1OLG0A04'
-#     password = '123456'
-#     sys.exit(handle_input(path, account_id, password))
