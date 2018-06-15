@@ -12,7 +12,7 @@ Usage:
     ./bytomd init --chain_id mainnet
    ```
    ```
-    ./main.py [options]
+    ./btmspanner.py [options]
    ```
    If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
 
@@ -27,7 +27,7 @@ Options:
 
 Example:
    ```
-    ./main.py -i ./btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000
+    ./btmspanner.py -i ./btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000
    ```
 
 Transaction txt file format:
