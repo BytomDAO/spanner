@@ -28,11 +28,11 @@ Options:
 
 Example:
    ```shell
-python utxo_combiner.py -c http://127.0.0.1:9888 -a sheng -p 123456 -m 50000000 -s 20
+python utxo_combiner.py -c http://127.0.0.1:9888 -a sheng -p 123456 -m 41250000000 -s 20
    ```
 
    or
 
    ```shell
-   python utxo_combiner.py --connection http://127.0.0.1:9888 --account sheng  --password 123456 --max_amount 50000000 --size 20
+   python utxo_combiner.py --connection http://127.0.0.1:9888 --account sheng  --password 123456 --max_amount 41250000000 --size 20
    ```
