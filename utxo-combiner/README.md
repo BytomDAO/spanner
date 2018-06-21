@@ -12,7 +12,7 @@ Usage:
     ./bytomd init --chain_id mainnet
    ```
    ```
-    ./btmspanner.py [options]
+    python utxo_combiner.py [options]
    ```
    If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
 
@@ -30,7 +30,7 @@ Example:
    ```shell
 python utxo_combiner.py -c http://127.0.0.1:9888 -a sheng -p 123456 -m 50000000 -s 20
    ```
-   
+
    or
 
    ```shell
