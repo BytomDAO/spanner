@@ -7,6 +7,12 @@ from UnspentOutputs import UnspentOutputs
 
 class TestUTXOMethods(unittest.TestCase):
 
+    def test_get_block_height(self):
+        con = Connection("http://127.0.0.1:9888")
+        block_height, ret = UnspentOutputs.get_block_height(connection=con)
+        if ret == 1:
+            print(block_height)
+
     def test_list_UTXO(self):
         con = Connection("http://127.0.0.1:9888")
         utxos, ret = UnspentOutputs.list_UTXO(con)
@@ -47,7 +53,7 @@ class TestUTXOMethods(unittest.TestCase):
         con = Connection("http://127.0.0.1:9888")
         account_alias = "zhangsan"
         asset_alias = "BTM"
-        UnspentOutputs.combine_utxos(connection=con, account_alias=account_alias, password='123456', max_amount=5000000000, size=20)
+        UnspentOutputs.combine_utxos(connection=con, account_alias=account_alias, password='123456', max_amount=50, size=20)
 
     if __name__ == '__main__':
         unittest.main()

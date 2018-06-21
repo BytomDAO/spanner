@@ -27,10 +27,11 @@ class TestTransactionMethods(unittest.TestCase):
             print(tx)
 
     def test_get_transaction(self):
-        con = Connection("http://127.0.0.1:9888")
-        tx_id = "5120dc0b2fe372e8f551b7e02ce5a44eb2a7b37108303d15ef8b601bfc9c1d5b"
-        tx = Transaction.get_transaction(con, tx_id)
+        con = Connection("http://116.62.130.184:9888")
+        tx_id = "eb535916e05ecee1a193ce489e5151c873f459639fcabffdc2df69f7f76fc550"
+        tx, ret = Transaction.get_transaction(con, tx_id)
         print(tx)
+        print(ret)
 
     def test_issue_transaction(self):
         # build transaction

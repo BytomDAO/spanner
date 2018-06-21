@@ -55,16 +55,17 @@ class Transaction(object):
         resp_json = json.loads(response.text)
 
         if resp_json['status'] == 'success':
-            return resp_json['data']
+            return resp_json['data'], 1
         elif resp_json['status'] == 'fail':
-            return resp_json['msg']
+            return resp_json['msg'], -1
         else:
-            return resp_json
+            return resp_json, 0
 
     @staticmethod
     def build_transaction(connection, actions):
+        # ttl: 15min=900000ms
         body_json = {"base_transaction": None, "actions": actions,
-                     "ttl": 0, "time_range": 0}
+                     "ttl": 1, "time_range": 0}
         response = connection.request("/build-transaction", body_json)
 
         resp_json = json.loads(response.text)
