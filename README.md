@@ -15,11 +15,11 @@ Prepare:
 
 ## [btm-sender](https://github.com/Bytom/btm-spanner/blob/master/btmsender/README.md)
 
-## btm-merger
+## utxo-merger
 
 This is a bytom tool that can merge some utxos to one.
 
-> btm-merger Usage:
+> utxo-merger Usage:
   
   ```shell
 python btmspanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
@@ -44,4 +44,4 @@ optional arguments:
   -y, --yes             confirm transfer
   ```
 
-> see more details in [btm-merger README.md](https://github.com/Bytom/btm-spanner/blob/master/utxomerger/README.md) file.
+> see more details in [utxo-merger README.md](https://github.com/Bytom/btm-spanner/blob/master/utxomerger/README.md) file.
