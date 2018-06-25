@@ -1,21 +1,9 @@
-# btm spanner
-
-Requirements: Python 3.x, with requests package
-
-Dependencies:
-   ```
-    pip install requests
-   ```
+# btm-sender
 
 Usage:
    ```
-    ./bytomd init --chain_id mainnet
+    btmspanner.py btmsender [options]
    ```
-   ```
-    ./btmspanner.py [options]
-   ```
-   If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
-
 Options:
    ```
   -h, --help      show this help message and exit
@@ -27,7 +15,7 @@ Options:
 
 Example:
    ```
-    ./btmspanner.py -i ./btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000
+    btmspanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000
    ```
 
 Transaction txt file format:
