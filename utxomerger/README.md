@@ -19,7 +19,7 @@ Usage:
 
 Options:
   ```shell
-  usage: merge_utxo.py [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
+  usage: python btmspanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
                      [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST] [-y]
 
 Bytom merge utxo tool
