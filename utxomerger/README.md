@@ -1,4 +1,4 @@
-# UTXO combiner
+# UTXO merger
 
 Requirements: Python 3.x, with requests package
 
@@ -12,6 +12,7 @@ Usage:
     ./bytomd init --chain_id mainnet
    ```
    ```
+    cd utxomerger
     python merge_utxo.py [options]
    ```
    If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
@@ -42,18 +43,18 @@ optional arguments:
 
 Example:
    ```shell
-python merge_utxo.py -o http://127.0.0.1:9888 -a sheng -p 123456 -x 41250000000 -s 0 -l
+python btmspanner.py utxomerger -o http://127.0.0.1:9888 -a sheng -p 123456 -x 41250000000 -s 0 -l   
    ```
 
    or
 
    ```shell
-python merge_utxo.py -o http://127.0.0.1:9888 -a sheng -p 123456 -x 41250000000 -s 0 -m 10
+python btmspanner.py utxomerger -o http://127.0.0.1:9888 -a sheng -p 123456 -x 41250000000 -s 0 -m 10
    ```
 
 Result:
 ```shell
-$ python merge_utxo.py -o http://127.0.0.1:9888 -a sheng -p 123456 -x 41250000000 -s 0 -m 10
+python btmspanner.py utxomerger -o http://127.0.0.1:9888 -a sheng -p 123456 -x 41250000000 -s 0 -l   
    0.  412.50000000 BTM f9c0d3831061edcf045e13e1a6408cb1794817290fceed1ef41fcbd809ef24d4 (mature)
    1.  412.50000000 BTM f98e8faf54ee9731578e973ab44dbdd2001fd254d34f5e8982de1cee0fc95126 (mature)
    2.  325.00000000 BTM f9864118a26f852149ac84d7d5b5da2bb97fb390a929a98faf3f3187c6ac6c35 (mature)

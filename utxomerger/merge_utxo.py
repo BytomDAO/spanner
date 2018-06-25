@@ -1,13 +1,13 @@
 import argparse
 import getpass
-import json
 import os
 import time
 
-from Account import Account
-from Transaction import Action, Transaction
-from UnspentOutputs import UnspentOutputs
-from connection import Connection
+
+from .Account import Account
+from .Transaction import Action, Transaction
+from .UnspentOutputs import UnspentOutputs
+from .connection import Connection
 
 parser = argparse.ArgumentParser(description='Bytom merge utxo tool')
 parser.add_argument('-o', '--url', default='http://127.0.0.1:9888', dest='url', help='API url to connect')
@@ -126,7 +126,7 @@ def main():
     if not to_address:
         to_address = input('Transfer address: ')
 
-    print(send_tx(Connection(options.url), utxo_mergelist, to_address, options.password))
+    print('tx_id:', send_tx(Connection(options.url), utxo_mergelist, to_address, options.password))
 
 
 if __name__ == '__main__':
