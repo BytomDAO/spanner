@@ -85,9 +85,7 @@ class Transaction(object):
         resp_json = json.loads(response.text)
 
         if resp_json['status'] == 'success':
-            data = resp_json['data']
-            raw_transaction = data['transaction']['raw_transaction']
-            return raw_transaction
+            return resp_json['data']
         elif resp_json['status'] == 'fail':
             return resp_json['msg']
         else:

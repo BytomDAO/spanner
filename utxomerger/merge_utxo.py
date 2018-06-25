@@ -1,0 +1,133 @@
+import argparse
+import getpass
+import json
+import os
+import time
+
+from Account import Account
+from Transaction import Action, Transaction
+from UnspentOutputs import UnspentOutputs
+from connection import Connection
+
+parser = argparse.ArgumentParser(description='Bytom merge utxo tool')
+parser.add_argument('-o', '--url', default='http://127.0.0.1:9888', dest='url', help='API url to connect')
+parser.add_argument('-a', '--account', default=None, dest='account_alias', help='account alias')
+parser.add_argument('-p', '--pass', default=None, dest='password', help='account password')
+parser.add_argument('-x', '--max', default=41250000000, type=int, dest='max_amount', help='range lower than max_amount')
+parser.add_argument('-s', '--min', default=1, type=int, dest='min_amount', help='range higher than min_amount')
+parser.add_argument('-l', '--list', action='store_true', dest='only_list', help='Show UTXO list without merge')
+parser.add_argument('-m', '--merge', default=None, type=int, dest='merge_list', help='UTXO to merge')
+parser.add_argument('-y', '--yes', action='store_true', default=None, dest='confirm', help='confirm transfer')
+
+
+class BytomException(Exception):
+    pass
+
+
+class JSONRPCException(Exception):
+    pass
+
+
+def list_utxo(connection, account_alias, min_amount, max_amount):
+    mature_utxos = []
+    data, ret = UnspentOutputs.list_UTXO(connection=Connection(connection))
+    block_height, ret_code = UnspentOutputs.get_block_height(connection=Connection(connection))
+    if ret == 1 and ret_code == 1:
+        for utxo in data:
+            # append mature utxo to set
+            if utxo['valid_height'] < block_height \
+                    and utxo['account_alias'] == account_alias \
+                    and utxo['asset_alias'] == 'BTM':
+                mature_utxos.append(utxo)
+    elif ret == -1:
+        raise BytomException(data)
+
+    result = []
+    for utxo in mature_utxos:
+        if utxo['amount'] <= max_amount and utxo['amount'] >= min_amount:
+            result.append(utxo)
+
+    return result
+
+
+def send_tx(connection, utxo_list, to_address, password):
+    gas_amount = 40000000
+    actions = []
+    amount = 0
+    asset_id = 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+
+    for utxo in utxo_list:
+        actions.append(Action.unspent_output(output_id=utxo['id']))
+        amount += utxo['amount']
+
+    # consider gas amount
+    if amount > gas_amount:
+        amount = amount - gas_amount
+    else:
+        print('\nAttention: The amount of all utxos is too little, less than tx gas.')
+        os._exit(0)
+
+    actions.append(Action.control_address(amount=amount, asset_id=asset_id, address=to_address))
+
+    time.sleep(1)
+
+    transaction = Transaction.build_transaction(connection, actions)
+
+    signed_transaction = Transaction.sign_transaction(connection, password, transaction)
+
+    if signed_transaction['sign_complete']:
+        raw_transaction = signed_transaction['transaction']['raw_transaction']
+        result = Transaction.submit_transaction(connection, raw_transaction)
+        return result['tx_id']
+    else:
+        raise BytomException('Sign not complete')
+
+
+def main():
+    options = parser.parse_args()
+    utxolist = list_utxo(options.url, options.account_alias, options.min_amount, options.max_amount)
+    for i, utxo in enumerate(utxolist):
+        print('{:4}. {:13.8f} BTM {}{}'.format(i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
+        if i >= 21:
+            break
+    print("total size of available utxos is {}".format(len(utxolist)))
+
+    if options.only_list:
+        return
+
+    merge_size = options.merge_list or input('Merge size of UTXOs (5, 13 or 20): ')
+    utxo_mergelist = []
+
+    for i in range(merge_size if merge_size <= len(utxolist) else len(utxolist)):
+        utxo_mergelist.append(utxolist[i])
+
+    if len(utxo_mergelist) < 2:
+        print('Not Merge UTXOs, Exit...')
+        return
+
+    print('To merge {} UTXOs with {:13.8f} BTM'.format(len(utxo_mergelist),
+                                                       sum(utxo['amount'] for utxo in utxo_mergelist) / 1e8))
+
+    if not options.account_alias:
+        options.account_alias = input('Transfer account alias: ')
+
+    if not options.password:
+        options.password = getpass.getpass('Bytom Account Password: ')
+
+    print(
+        'One last disclaimer: the code we are about to go over is in no way intended to be used as an example of a robust solution. ')
+    print('You will transfer BTM to an address, please check this python code and DO IT later.')
+
+    if not (options.confirm or input('Confirm [y/N] ').lower() == 'y'):
+        print('Not Merge UTXOs, Exit...')
+        return
+
+    to_address = Account.find_address_by_alias(Connection(options.url), options.account_alias)
+    if not to_address:
+        to_address = input('Transfer address: ')
+
+    print(send_tx(Connection(options.url), utxo_mergelist, to_address, options.password))
+
+
+if __name__ == '__main__':
+    main()
