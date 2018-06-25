@@ -1,7 +1,7 @@
 import os
 import sys
 import argparse
-import httprequest
+from . import httprequest
 
 
 def validate_address(line, address):

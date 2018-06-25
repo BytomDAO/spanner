@@ -1,6 +1,6 @@
 import os
 import sys
-import httprequest
+from . import httprequest
 
 miner_fee = 40000000
 max_output_count = 1500
