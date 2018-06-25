@@ -44,4 +44,4 @@ optional arguments:
   -y, --yes             confirm transfer
   ```
 
-> see more details in [btm-merger README.md](https://github.com/Bytom/btm-spanner/blob/master/btmsender/README.md) file.
+> see more details in [btm-merger README.md](https://github.com/Bytom/btm-spanner/blob/master/utxomerger/README.md) file.
