@@ -1,5 +1,15 @@
 # UTXO merger
 
+
+> **One last disclaimer:**
+
+**the code we are about to go over is in no way intended to be used as an example of a robust solution.**
+
+**We wouldn't be responsible for the consequences of using this tool.**
+
+**please check this python code carefully and use it later.**
+
+
 Requirements: Python 3.x, with requests package
 
 Dependencies:

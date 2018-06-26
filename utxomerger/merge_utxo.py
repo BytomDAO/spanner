@@ -88,6 +88,10 @@ def main():
     utxo_total = []
     utxolist = list_utxo(options.url, options.account_alias, options.min_amount, options.max_amount)
 
+    if (options.merge_list * options.for_loop) > len(utxolist):
+        print('input size is too large, please check it later.')
+        return 
+
     for i, utxo in enumerate(utxolist):
         print('{:4}. {:13.8f} BTM {}{}'.format(i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
         if i >= options.merge_list * options.for_loop:
