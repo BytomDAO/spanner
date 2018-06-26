@@ -37,20 +37,31 @@ Bytom tool merge some utxos to one.
 Usage:
   
   ```shell
-    btmspanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
-                     [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST] [-y]
-  ```
-Options:
-  ```
-  -h, --help                                    show this help message and exit
-  -o URL, --url URL                             API url to connect
-  -a ACCOUNT_ALIAS, --account ACCOUNT_ALIAS     account alias
-  -p PASSWORD, --pass PASSWORD                  account password
-  -x MAX_AMOUNT, --max MAX_AMOUNT               range lower than max_amount
-  -s MIN_AMOUNT, --min MIN_AMOUNT               range higher than min_amount
-  -l, --list                                    Show UTXO list without merge
-  -m MERGE_LIST, --merge MERGE_LIST             UTXO to merge
-  -y, --yes                                     confirm transfer
+  $ python btmspanner.py utxomerger -h
+usage: btmspanner.py [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
+                     [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST]
+                     [-f FOR_LOOP] [-y]
+
+Bytom merge utxo tool
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o URL, --url URL     API url to connect
+  -a ACCOUNT_ALIAS, --account ACCOUNT_ALIAS
+                        account alias
+  -p PASSWORD, --pass PASSWORD
+                        account password
+  -x MAX_AMOUNT, --max MAX_AMOUNT
+                        range lower than max_amount
+  -s MIN_AMOUNT, --min MIN_AMOUNT
+                        range higher than min_amount
+  -l, --list            Show UTXO list without merge
+  -m MERGE_LIST, --merge MERGE_LIST
+                        UTXO to merge
+  -f FOR_LOOP, --forloop FOR_LOOP
+                        size for loop of UTXO to merge
+  -y, --yes             confirm transfer
+  
   ```
 
 See more details in utxo-merger [README.md](https://github.com/Bytom/btm-spanner/blob/master/utxomerger/README.md) file.
