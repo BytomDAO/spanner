@@ -36,7 +36,7 @@ Bytom tool merge some utxos to one for loops.
 
 Usage:
   
-  ```shell
+  ```
   $ python btmspanner.py utxomerger -h
 usage: btmspanner.py [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
                      [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST]
