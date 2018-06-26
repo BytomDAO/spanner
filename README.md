@@ -65,3 +65,4 @@ optional arguments:
   ```
 
 See more details in utxo-merger [README.md](https://github.com/Bytom/btm-spanner/blob/master/utxomerger/README.md) file.
+
