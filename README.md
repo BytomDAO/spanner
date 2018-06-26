@@ -32,7 +32,7 @@ Options:
 See more details in btm-sender [README.md](https://github.com/Bytom/btm-spanner/blob/master/btmsender/README.md) file.
 ## utxo-merger
 
-Bytom tool merge some utxos to one.
+Bytom tool merge some utxos to one for loops.
 
 Usage:
   
