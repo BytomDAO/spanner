@@ -88,10 +88,6 @@ def main():
     utxo_total = []
     utxolist = list_utxo(options.url, options.account_alias, options.min_amount, options.max_amount)
 
-    if (options.merge_list * options.for_loop) > len(utxolist):
-        print('input size is too large, please check it later.')
-        return 
-
     for i, utxo in enumerate(utxolist):
         print('{:4}. {:13.8f} BTM {}{}'.format(i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
         if i >= options.merge_list * options.for_loop:
@@ -104,12 +100,10 @@ def main():
         return
 
     print('To merge {} UTXOs with {:13.8f} BTM totally.\n'.format(len(utxo_total),
-                                                       sum(utxo['amount'] for utxo in utxo_total) / 1e8))
+                                                                  sum(utxo['amount'] for utxo in utxo_total) / 1e8))
 
     merge_size = options.merge_list or input('Merge size of UTXOs (5, 13 or 20): ')
     for_loop = options.for_loop or input('for loop size (1, 10 or 50): ')
-
-
 
     print(
         'One last disclaimer: the code we are about to go over is in no way intended to be used as an example of a robust solution. ')
@@ -120,15 +114,17 @@ def main():
         utxo_mergelist = []
 
         # for i in range(merge_size if merge_size <= len(utxolist) else len(utxolist)):
-            # utxo_mergelist.append(utxolist[i])
-        for i in range(loops*merge_size, ((loops+1)*merge_size) if (loops*merge_size) < len(utxolist) else len(utxolist)):
+        # utxo_mergelist.append(utxolist[i])
+        for i in range(loops * merge_size,
+                       ((loops + 1) * merge_size) if (loops * merge_size) < len(utxolist) else len(utxolist)):
             utxo_mergelist.append(utxolist[i])
 
         # print(loops*merge_size, ", ", ((loops+1)*merge_size) if (loops*merge_size) < len(utxolist) else len(utxolist))
-        print('this is the {} times to merge utxos. -----begin'.format(loops+1))
+        print('this is the {} times to merge utxos. -----begin'.format(loops + 1))
 
         for i, utxo in enumerate(utxo_mergelist):
-            print('{:4}. {:13.8f} BTM {}{}'.format(loops*merge_size+i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
+            print(
+                '{:4}. {:13.8f} BTM {}{}'.format(loops * merge_size + i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
 
         print("total size of available utxos is {}".format(len(utxo_mergelist)))
 
@@ -154,11 +150,7 @@ def main():
             to_address = input('Transfer address: ')
 
         print('tx_id:', send_tx(Connection(options.url), utxo_mergelist, to_address, options.password))
-        print('this is the {} times to merge utxos. -----end\n'.format(loops+1))
-
-
-        time.sleep(2)
-        pass
+        print('this is the {} times to merge utxos. -----end\n'.format(loops + 1))
 
 
 if __name__ == '__main__':
