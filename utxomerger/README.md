@@ -3,21 +3,25 @@
 
 > **One last disclaimer:**
 
-**the code we are about to go over is in no way intended to be used as an example of a robust solution.**
+**The code we are about to go over is in no way intended to be used as an example of a robust solution.**
 
 **We wouldn't be responsible for the consequences of using this tool.**
 
-**please check this python code carefully and use it later.**
+**Please check this python code carefully and use it later.**
 
 
-Requirements: Python 3.x, with requests package
+## Preparation
 
-Dependencies:
+- Requirements: Python 3.x, with requests package
+
+- Dependencies:
    ```
     pip install requests
    ```
 
-Usage:
+## Usage:
+
+
    ```
     ./bytomd init --chain_id mainnet
    ```
@@ -27,7 +31,9 @@ Usage:
    ```
    If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
 
-Options:
+- Options:
+
+
   ```
   $ python btmspanner.py utxomerger -h
 usage: btmspanner.py [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
@@ -56,12 +62,31 @@ optional arguments:
   
   ```
 
-Example:
+## Example
+
+  
+**eg.01:**
+
+   ```
+$ python btmspanner.py utxomerger -l
+   ```
+   this example can list all utxos at localhost.
+
+**eg.02:**
+
+   ```
+$ python btmspanner.py utxomerger -o http://127.0.0.1:9888 -l
+   ```
+   this example can list all utxos at host http://127.0.0.1:9888.
+
+**eg.03:**
+
    ```
 $ python btmspanner.py utxomerger -o http://127.0.0.1:9888 -a your_account_alias -p your_password -x 41250000000 -s 0 -m 20 -f 3 -y
    ```
 
-Result:
+**Result:**
+
 ```
 $ python btmspanner.py utxomerger -o http://52.83.158.112:9888 -a btmpool_test -p btmpool -x 41250000000 -s 0 -m 20 -f 3 -y
    0.  412.50000000 BTM fac1fa4776c43e2159683c6ce7ffdd64734be2bd982d997b59fa8198c6af4d1c (mature)

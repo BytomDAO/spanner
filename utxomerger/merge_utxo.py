@@ -85,19 +85,42 @@ def send_tx(connection, utxo_list, to_address, password):
 
 def main():
     options = parser.parse_args()
+
+    if options.only_list:
+        data, ret = UnspentOutputs.list_UTXO(connection=Connection(options.url))
+        if ret == 1:
+            for i, utxo in enumerate(data):
+                print('{:4}. {:13.8f} BTM {}{}'.format(i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
+                if i >= 99:
+                    print('...')
+                    print('...')
+                    print('only print 100 utxos.')
+                    break
+            print("total size of available utxos is {}".format(len(data)))
+        elif ret == -1:
+            print("failed error is {}".format(data))
+        else:
+            print(data)
+
+        return
+
     utxo_total = []
     utxolist = list_utxo(options.url, options.account_alias, options.min_amount, options.max_amount)
 
     for i, utxo in enumerate(utxolist):
         print('{:4}. {:13.8f} BTM {}{}'.format(i, utxo['amount'] / 1e8, utxo['id'], ' (mature)'))
+        if i >= 99:
+            print('...')
+            print('...')
+            print('only print 100 utxos.')
+            break
+
+    for i, utxo in enumerate(utxolist):
         if i >= options.merge_list * options.for_loop:
             break
         utxo_total.append(utxo)
 
-    print("total size of available utxos is {}".format(len(utxolist)))
-
-    if options.only_list:
-        return
+    print("total size of available utxos is {}\n".format(len(utxolist)))
 
     print('To merge {} UTXOs with {:13.8f} BTM totally.\n'.format(len(utxo_total),
                                                                   sum(utxo['amount'] for utxo in utxo_total) / 1e8))
