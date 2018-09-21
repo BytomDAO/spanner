@@ -28,6 +28,8 @@ Options:
   -a account      wallet account id
   -p password     wallet account password
   -c count        transaction output count
+  -u              use unconfirmed UTXO build transaction
+  -t time_range   the transaction will not be submitted into block after this height
   ```
 See more details in btm-sender [README.md](https://github.com/Bytom/btm-spanner/blob/master/btmsender/README.md) file.
 ## utxo-merger

@@ -11,11 +11,13 @@ Options:
   -a account      wallet account id
   -p password     wallet account password
   -c count        transaction output count
+  -u              use unconfirmed UTXO build transaction
+  -t time_range   the transaction will not be submitted into block after this height
   ```
 
 Example:
    ```
-    btmspanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000
+    btmspanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000 -u -t 96310
    ```
 
 Transaction txt file format:
