@@ -117,7 +117,8 @@ def main():
         # utxo_mergelist.append(utxolist[i])
         for i in range(loops * merge_size,
                        ((loops + 1) * merge_size) if (loops * merge_size) < len(utxolist) else len(utxolist)):
-            utxo_mergelist.append(utxolist[i])
+            if i < len(utxolist):
+                utxo_mergelist.append(utxolist[i])
 
         # print(loops*merge_size, ", ", ((loops+1)*merge_size) if (loops*merge_size) < len(utxolist) else len(utxolist))
         print('this is the {} times to merge utxos. -----begin'.format(loops + 1))
