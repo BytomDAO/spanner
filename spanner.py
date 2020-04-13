@@ -13,6 +13,6 @@ if __name__ == "__main__":
         sys.exit(merge_utxo.main())
     else:
         print("Input error:\n"
-              "btmsender usage: btmspanner.py btmsender [-h] -i I -a A -p P [-c C]"
-              "utxomerger usage: btmspanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD] [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST] [-y]")
+              "btmsender usage: spanner.py btmsender [-h] -i INPUT_FILE -a ACCOUNT_ID -p PASSWORD [-c OUTPUT_COUNT]\n"
+              "utxomerger usage: spanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD] [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST] [-y]")
         sys.exit(1)
