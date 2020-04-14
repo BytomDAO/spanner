@@ -1,5 +1,5 @@
-# btm-spanner
-Python based Bytom wallet tools
+# spanner
+Python based bytom and vapor wallet tools
 
 Requirements: Python 3.x, with requests package
 
@@ -11,15 +11,19 @@ Prepare:
    ```
     bytomd init --chain_id mainnet
    ```
-   If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
+   OR  
+   ```
+    vapord init --chain_id mainnet
+   ```
+   If you don't know how to run bytomd or vapord please check [bytom wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install) or [vapor wiki](https://github.com/Bytom/vapor/wiki/Build-and-Install)
 
 ## btm-sender
 
-Bytom tool send BTM to large numbers of address
+Tool send BTM to large numbers of address
 
 Usage:
    ```
-    btmspanner.py btmsender [-h] -i I -a A -p P [-c C]
+    spanner.py btmsender [-h] -i I -a A -p P [-c C]
    ```
 Options:
    ```
@@ -31,22 +35,19 @@ Options:
   -u              use unconfirmed UTXO build transaction
   -t time_range   the transaction will not be submitted into block after this height
   ```
-See more details in btm-sender [README.md](https://github.com/Bytom/btm-spanner/blob/master/btmsender/README.md) file.
+See more details in btm-sender [README.md](https://github.com/Bytom/spanner/blob/master/btmsender/README.md) file.
 ## utxo-merger
 
-Bytom tool merge some utxos to one for loops.
+Tool merge some utxos to one for loops.
 
 Usage:
-  
-  ```
-  $ python btmspanner.py utxomerger -h
-usage: btmspanner.py [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
+```
+spanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
                      [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST]
                      [-f FOR_LOOP] [-y]
-
-Bytom merge utxo tool
-
-optional arguments:
+```
+Options:
+```
   -h, --help            show this help message and exit
   -o URL, --url URL     API url to connect
   -a ACCOUNT_ALIAS, --account ACCOUNT_ALIAS
@@ -66,5 +67,5 @@ optional arguments:
   
   ```
 
-See more details in utxo-merger [README.md](https://github.com/Bytom/btm-spanner/blob/master/utxomerger/README.md) file.
+See more details in utxo-merger [README.md](https://github.com/Bytom/spanner/blob/master/utxomerger/README.md) file.
 

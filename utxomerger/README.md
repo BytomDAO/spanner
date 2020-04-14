@@ -17,26 +17,25 @@ Dependencies:
     pip install requests
    ```
 
+Prepare:
+   ```
+    bytomd init --chain_id mainnet
+   ```
+   OR  
+   ```
+    vapord init --chain_id mainnet
+   ```
+   If you don't know how to run bytomd or vapord please check [bytom wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install) or [vapor wiki](https://github.com/Bytom/vapor/wiki/Build-and-Install)
+
 Usage:
-   ```
-    ./bytomd init --chain_id mainnet
-   ```
-   ```
-    cd utxomerger
-    python merge_utxo.py [options]
-   ```
-   If you don't know how to run bytomd please check this [wiki](https://github.com/Bytom/bytom/wiki/Build-and-Install)
+  ```
+    spanner.py utxomerger [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
+                     [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST]
+                     [-f FOR_LOOP] [-y]
+  ```
 
 Options:
   ```
-  $ python btmspanner.py utxomerger -h
-usage: btmspanner.py [-h] [-o URL] [-a ACCOUNT_ALIAS] [-p PASSWORD]
-                     [-x MAX_AMOUNT] [-s MIN_AMOUNT] [-l] [-m MERGE_LIST]
-                     [-f FOR_LOOP] [-y]
-
-Bytom merge utxo tool
-
-optional arguments:
   -h, --help            show this help message and exit
   -o URL, --url URL     API url to connect
   -a ACCOUNT_ALIAS, --account ACCOUNT_ALIAS
@@ -58,12 +57,12 @@ optional arguments:
 
 Example:
    ```
-$ python btmspanner.py utxomerger -o http://127.0.0.1:9888 -a your_account_alias -p your_password -x 41250000000 -s 0 -m 20 -f 3 -y
+$ python spanner.py utxomerger -o http://127.0.0.1:9888 -a your_account_alias -p your_password -x 41250000000 -s 0 -m 20 -f 3 -y
    ```
 
 Result:
 ```
-$ python btmspanner.py utxomerger -o http://52.83.158.112:9888 -a btmpool_test -p btmpool -x 41250000000 -s 0 -m 20 -f 3 -y
+$ python spanner.py utxomerger -o http://52.83.158.112:9888 -a btmpool_test -p btmpool -x 41250000000 -s 0 -m 20 -f 3 -y
    0.  412.50000000 BTM fac1fa4776c43e2159683c6ce7ffdd64734be2bd982d997b59fa8198c6af4d1c (mature)
    1.  412.50000000 BTM f7065066c92ec44986b8f19e29dc7b7fcadecd54544fd97124640a9118e897ca (mature)
    2.  412.50000000 BTM e59676bb52ad8e1bb601603f4a34a1e43626fc69cdf65a73016cddfc4877e399 (mature)

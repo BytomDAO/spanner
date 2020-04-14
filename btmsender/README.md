@@ -2,7 +2,7 @@
 
 Usage:
    ```
-    btmspanner.py btmsender [options]
+    spanner.py btmsender [options]
    ```
 Options:
    ```
@@ -17,7 +17,7 @@ Options:
 
 Example:
    ```
-    btmspanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000 -u -t 96310
+    spanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000 -u -t 96310
    ```
 
 Transaction txt file format:
