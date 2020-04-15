@@ -7,9 +7,9 @@ Usage:
 Options:
    ```
   -h, --help      show this help message and exit
+  -n node         bytomd or vapord node address
   -i input        transaction txt file
   -a account      wallet account id
-  -p password     wallet account password
   -c count        transaction output count
   -u              use unconfirmed UTXO build transaction
   -t time_range   the transaction will not be submitted into block after this height
