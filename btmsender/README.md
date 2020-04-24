@@ -10,6 +10,7 @@ Options:
   -n node         bytomd or vapord node address
   -i input        transaction txt file
   -a account      wallet account id
+  -s asset_id     transaction asset id
   -c count        transaction output count
   -u              use unconfirmed UTXO build transaction
   -t time_range   the transaction will not be submitted into block after this height
@@ -17,7 +18,7 @@ Options:
 
 Example:
    ```
-    spanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -p 123456 -c 1000 -u -t 96310
+    spanner.py btmsender -i btmsender/btm.txt -a 0F0BV1OLG0A04 -s d50a426bdaaf1458d161aba4d8c3ebdd095eac7e1bbeb4a0252a3737ccf2d492 -p 123456 -c 1000 -u -t 96310
    ```
 
 Transaction txt file format:
