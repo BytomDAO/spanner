@@ -23,7 +23,7 @@ Tool send BTM to large numbers of address
 
 Usage:
    ```
-    spanner.py btmsender [-h] -n N -i I -a A [-c C] [-u] [-t T]
+    spanner.py btmsender [-h] -n N -i I -a A [-s S] [-c C] [-u] [-t T]
    ```
 Options:
    ```
@@ -31,6 +31,7 @@ Options:
   -n node         bytomd or vapord node address
   -i input        transaction txt file
   -a account      wallet account id
+  -s asset_id     transaction asset id
   -c count        transaction output count
   -u              use unconfirmed UTXO build transaction
   -t time_range   the transaction will not be submitted into block after this height

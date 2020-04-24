@@ -1,30 +1,22 @@
 import os
 import sys
+
+from . import const
 from . import httprequest
 
 
 class BTMSender:
-    miner_fee = 40000000
-    max_output_count = 1500
-
-    def __init__(self, _node_address, _input_path, _account_id, _password, _output_count, _use_unconfirmed,
-                 _time_range):
-        self.node_address = _node_address
-        self.input_path = _input_path
-        self.account_id = _account_id
-        self.password = _password
-        self.output_count = _output_count
-        self.use_unconfirmed = _use_unconfirmed
-        self.time_range = _time_range
+    def __init__(self, _input):
+        self.input = _input
 
     def handle_input(self):
-        if self.output_count <= 0:
-            self.output_count = self.max_output_count
+        if self.input.output_count <= 0:
+            self.input.output_count = const.max_output_count
         lines = list()
-        with open(self.input_path, 'r', encoding='utf-8') as file:
+        with open(self.input.input_path, 'r', encoding='utf-8') as file:
             for line in file:
                 line = line.strip()
-                if len(lines) < self.output_count:
+                if len(lines) < self.input.output_count:
                     lines.append(line)
                 else:
                     self.handle_transaction(lines)
@@ -42,7 +34,7 @@ class BTMSender:
             tx_id = data['tx_id']
             if tx_id:
                 print('transaction_id:\n' + tx_id)
-                write_lines_to_file(lines, self.input_path)
+                write_lines_to_file(lines, self.input.input_path)
         else:
             print('Sign transaction is failed.Please check account password.')
             sys.exit(1)
@@ -56,24 +48,40 @@ class BTMSender:
             address = data[0]
             amount = int(data[1])
             amount_sum += amount
-            address_dict = get_address_dict(amount, address)
+            address_dict = self.get_address_dict(amount, address)
             action_list.append(address_dict)
-        amount_sum += self.miner_fee
-        spend_dict = get_spend_dict(self.account_id, int(amount_sum), self.use_unconfirmed)
+        fee_dict = self.get_spend_dict(const.miner_fee, const.btm_asset_id)
+        spend_dict = self.get_spend_dict(int(amount_sum), self.input.asset_id)
         action_list.insert(0, spend_dict)
+        action_list.insert(1, fee_dict)
         parameter = {'base_transaction': None, 'actions': action_list, 'ttl': 0}
-        if self.time_range != 0:
-            parameter.update(time_range=self.time_range)
-        return httprequest.post(self.node_address, 'build-transaction', parameter)
+        if self.input.time_range != 0:
+            parameter.update(time_range=self.input.time_range)
+        return httprequest.post(self.input.node_address, 'build-transaction', parameter)
 
     # parameter transaction: dict from build_transaction function return
     def sign_transaction(self, _transaction):
-        parameter = {'password': self.password, 'transaction': _transaction}
-        return httprequest.post(self.node_address, 'sign-transaction', parameter)
+        parameter = {'password': self.input.password, 'transaction': _transaction}
+        return httprequest.post(self.input.node_address, 'sign-transaction', parameter)
 
     def submit_transaction(self, _transaction):
         parameter = {'raw_transaction': _transaction['transaction']['raw_transaction']}
-        return httprequest.post(self.node_address, 'submit-transaction', parameter)
+        return httprequest.post(self.input.node_address, 'submit-transaction', parameter)
+
+    # control_address action
+    def get_address_dict(self, _amount, _address):
+        return {'amount': _amount,
+                'asset_id': self.input.asset_id,
+                'address': _address,
+                'type': 'control_address'}
+
+    # spend_account action
+    def get_spend_dict(self, _amount_sum, _asset_id):
+        return {'account_id': self.input.account_id,
+                'amount': _amount_sum,
+                'asset_id': _asset_id,
+                'type': 'spend_account',
+                'use_unconfirmed': self.input.use_unconfirmed}
 
 
 # write complete transactions lines to file
@@ -81,20 +89,3 @@ def write_lines_to_file(lines, _path):
     _path = os.path.abspath(os.path.dirname(_path)) + os.path.sep + 'completed.txt'
     with open(_path, 'a', encoding='utf-8') as file:
         file.write('\n'.join(lines) + '\n\n')
-
-
-# control_address action
-def get_address_dict(_amount, _address):
-    return {'amount': _amount,
-            'asset_id': 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-            'address': _address,
-            'type': 'control_address'}
-
-
-# spend_account action
-def get_spend_dict(_account_id, _amount_sum, _use_unconfirmed):
-    return {'account_id': _account_id,
-            'amount': _amount_sum,
-            'asset_id': 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-            'type': 'spend_account',
-            'use_unconfirmed': _use_unconfirmed}
